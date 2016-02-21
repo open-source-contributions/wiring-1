@@ -19,4 +19,11 @@ interface ViewRendererInterface
      * @param array $params View params
      */
     public function render($view, array $params = []);
+
+    /**
+     * Get template engine methods.
+     *
+     * @return \League\Plates\Engine self
+     */
+    public function engine();
 }

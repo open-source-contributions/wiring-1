@@ -16,4 +16,14 @@ class ViewRenderer extends Engine implements ViewRendererInterface
     {
         parent::__construct($directory, $fileExtension);
     }
+
+    /**
+     * Get template engine methods.
+     *
+     * @return \League\Plates\Engine self
+     */
+    public function engine()
+    {
+        return $this;
+    }
 }
