@@ -1,3 +1,3 @@
 # Wiring
 
-An Micro Framework PHP with Autowiring and Middlewares.
+An Microframework PHP with Autowiring and Middlewares.
