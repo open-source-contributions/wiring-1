@@ -2,28 +2,38 @@
 
 namespace Wiring\Provider;
 
-use League\Plates\Engine;
-
-class ViewRenderer extends Engine implements ViewRendererInterface
+class ViewRenderer implements ViewRendererInterface
 {
+    protected $engine;
+
     /**
-     * Create a new template engine instance.
+     * Define template engine.
      * 
-     * @param string $directory View path
-     * @param string $fileExtension File extension
+     * @param $engine
      */
-    public function __construct($directory = null, $fileExtension = 'phtml')
+    public function __construct($engine)
     {
-        parent::__construct($directory, $fileExtension);
+        $this->engine = $engine;
     }
 
     /**
-     * Get template engine methods.
+     * Get template engine.
      *
-     * @return \League\Plates\Engine self
+     * @return mixed
      */
     public function engine()
     {
-        return $this;
+        return $this->engine;
+    }
+
+    /**
+     * Render a new template view.
+     *
+     * @param string $view Template view name
+     * @param array $params View params
+     */
+    public function render($view, array $params = [])
+    {
+        return $this->engine()->render($view, $params);
     }
 }

@@ -5,16 +5,12 @@ namespace Wiring\Exception;
 class MethodNotAllowedException extends \Exception
 {
     /**
-     * MethodNotAllowed exception.
+     * Method Not Allowed exception.
      *
-     * @param null $message
+     * @param string $message
      */
-    public function __construct($message = null)
+    public function __construct($message = 'Method Not Allowed')
     {
-        if (is_null($message)) {
-            $message = 'Method Not Allowed';
-        }
-
         parent::__construct($message, 405);
     }
 }

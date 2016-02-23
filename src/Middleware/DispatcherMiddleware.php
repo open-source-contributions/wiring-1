@@ -6,7 +6,7 @@ use Interop\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class DispatcherMiddleware
+class DispatcherMiddleware implements MiddlewareInterface
 {
     /**
      * @var \Interop\Container\ContainerInterface
@@ -34,10 +34,12 @@ class DispatcherMiddleware
     /**
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
-     * @param callable $next
+     * @param callable|null $next
+     *
      * @throws \Exception
+     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next)
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next = null)
     {
         $callable = $request->getAttribute($this->attribute);
 

@@ -6,13 +6,16 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\EmitterInterface;
 
-class EmitterMiddleware
+class EmitterMiddleware implements MiddlewareInterface
 {
     /**
-     * Zend\Diactoros\Response\EmitterInterface;
+     * @var \Zend\Diactoros\Response\EmitterInterface
      */
     protected $emitter;
 
+    /**
+     * @param \Zend\Diactoros\Response\EmitterInterface $emitter
+     */
     public function __construct(EmitterInterface $emitter)
     {
         $this->emitter = $emitter;
@@ -21,9 +24,11 @@ class EmitterMiddleware
     /**
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
-     * @param callable $next
+     * @param callable|null $next
+     *
+     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next)
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next = null)
     {
         // Checks if or where headers not have been sent
         if (headers_sent() === false) {

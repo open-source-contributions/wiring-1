@@ -8,7 +8,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Wiring\Exception\MethodNotAllowedException;
 use Wiring\Exception\MethodNotFoundException;
 
-class FastRouteMiddleware
+class FastRouteMiddleware implements MiddlewareInterface
 {
     /**
      * @var \FastRoute\Dispatcher
@@ -33,11 +33,13 @@ class FastRouteMiddleware
     /**
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
-     * @param callable $next
+     * @param callable|null $next
+     *
      * @throws \Wiring\Exception\MethodNotAllowedException
      * @throws \Wiring\Exception\MethodNotFoundException
+     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next)
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next = null)
     {
         $routeInfo = $this->fastRoute->dispatch($request->getMethod(), $request->getUri()->getPath());
 

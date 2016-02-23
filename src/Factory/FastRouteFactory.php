@@ -7,17 +7,28 @@ use FastRoute\RouteCollector;
 
 class FastRouteFactory
 {
+    protected $routes;
+
+    /**
+     * Set routes constructor.
+     *
+     * @param array $routes
+     */
+    public function __construct(array $routes)
+    {
+        $this->routes = $routes;
+    }
+
     /**
      * Get routes from dispatcher.
-     * 
-     * @param array $routes
-     * @return FastRoute\Dispatcher
+     *
+     * @return mixed
      */
-    public static function fromDispatcher(array $routes)
+    public function getDispatcher()
     {
-        $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $route) use ($routes) {
+        $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $route) {
             // Added all routes
-            foreach ($routes as $param) {
+            foreach ($this->routes as $param) {
                 $route->addRoute($param[0], $param[1], $param[2]);
             }
         });
