@@ -101,6 +101,45 @@ class InvolkerMiddleware
     }
 
     /**
+     * Add router middleware.
+     *
+     * @param \Wiring\Middleware\MiddlewareInterface $router
+     * @return self
+     */
+    public function addRouterMiddleware(MiddlewareInterface $router)
+    {
+        $this->addMiddleware('router', $router);
+
+        return $this;
+    }
+
+    /**
+     * Add dispatcher middleware.
+     *
+     * @param \Wiring\Middleware\MiddlewareInterface $dispatcher
+     * @return self
+     */
+    public function addDispatcherMiddleware(MiddlewareInterface $dispatcher)
+    {
+        $this->addMiddleware('dispatcher', $dispatcher);
+
+        return $this;
+    }
+
+    /**
+     * Add emitter middleware.
+     *
+     * @param \Wiring\Middleware\MiddlewareInterface $emitter
+     * @return self
+     */
+    public function addEmitterMiddleware(MiddlewareInterface $emitter)
+    {
+        $this->addAfterMiddleware('emitter', $emitter);
+
+        return $this;
+    }
+
+    /**
      * Get middleware.
      *
      * @param string $key

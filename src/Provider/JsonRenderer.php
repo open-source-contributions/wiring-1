@@ -8,32 +8,71 @@ use InvalidArgumentException;
 class JsonRenderer implements JsonRendererInterface
 {
     /**
+     * @var mixed
+     */
+    protected $data;
+
+    /**
+     * @var int
+     */
+    protected $encodingOptions = 0;
+
+    /**
+     * @var bool
+     */
+    protected $isRender = false;
+
+    /**
      * Write data with JSON encode.
-     * 
+     *
      * @param array $data The data
      * @param int $encodingOptions JSON encoding options
      * @return self
      */
     public function render($data, $encodingOptions = 0)
     {
-        return $this->jsonEncode($data, $encodingOptions);
+        $this->data = $data;
+        $this->encodingOptions = $encodingOptions;
+        $this->isRender = true;
+
+        return $this;
+    }
+
+    /**
+     * Write JSON to data response.
+     *
+     * @param mixed $data The data
+     * @return self
+     */
+    public function write($data)
+    {
+        $this->data = $data;
+        $this->isRender = false;
+
+        return $this;
     }
 
     /**
      * Return response with JSON header and status.
-     * 
+     *
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param int $status
      * @return mixed
      */
-    public function response(ResponseInterface $response, $status = 200)
+    public function to(ResponseInterface $response, $status = 200)
     {
+        if ($this->isRender) {
+            $response->getBody()->write($this->jsonEncode($this->data, $this->encodingOptions));
+        } else {
+            $response->getBody()->write($this->data);
+        }
+
         return $response->withStatus($status)->withHeader('Content-Type', 'application/json;charset=utf-8');
     }
 
     /**
      * Encode the provided data to JSON.
-     * 
+     *
      * @param array $data The data
      * @param int $encodingOptions JSON encoding options
      * @return string JSON
@@ -51,7 +90,7 @@ class JsonRenderer implements JsonRendererInterface
         $json = json_encode($data, $encodingOptions);
 
         if (JSON_ERROR_NONE !== json_last_error()) {
-            throw new InvalidArgumentException(sprintf('Unable to encode data to JSON in %s: %s', 
+            throw new InvalidArgumentException(sprintf('Unable to encode data to JSON in %s: %s',
                 __CLASS__, json_last_error_msg()));
         }
 
