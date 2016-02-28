@@ -1,6 +1,6 @@
 # Wiring
 
-An Microframework PHP with Autowiring and Middlewares.
+An PHP Microframework with Interoperability (PSRs).
 
 Installation / Usage
 --------------------
@@ -21,19 +21,21 @@ Installation / Usage
 
 ## Quick start
 
-1 - Clone the repo:
+Use Wiring Microframework [Skeleton](https://github.com/aracaw/wiring-skeleton.git):
+
+1. Clone the repo:
 
 ```bash
 git clone https://github.com/aracaw/wiring-skeleton.git
 ```
 
-2 - Change to the directory created
+2. Change to the directory created
 
 ```bash
 cd wiring-skeleton/
 ```
 
-3 - Download Composer
+3. Download Composer
 
 Run this in your terminal to get the latest Composer version:
 
@@ -47,13 +49,13 @@ or if you don't have curl:
 php -r "readfile('https://getcomposer.org/installer');" | php
 ```
 
-4 - Composer Install
+4. Composer Install
 
 ```bash
 php composer.phar install
 ```
 
-5 - Start PHP Built-in web server:
+5. Start PHP Built-in web server:
 
 ```bash
 php -S 127.0.0.1:8000 -t public/
