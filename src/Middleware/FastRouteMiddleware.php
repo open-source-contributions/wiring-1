@@ -6,7 +6,7 @@ use FastRoute\Dispatcher;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Wiring\Exception\MethodNotAllowedException;
-use Wiring\Exception\MethodNotFoundException;
+use Wiring\Exception\NotFoundException;
 
 class FastRouteMiddleware implements MiddlewareInterface
 {
@@ -36,7 +36,7 @@ class FastRouteMiddleware implements MiddlewareInterface
      * @param callable|null $next
      *
      * @throws \Wiring\Exception\MethodNotAllowedException
-     * @throws \Wiring\Exception\MethodNotFoundException
+     * @throws \Wiring\Exception\NotFoundException
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next = null)
@@ -55,9 +55,9 @@ class FastRouteMiddleware implements MiddlewareInterface
             case Dispatcher::METHOD_NOT_ALLOWED:
                 throw new MethodNotAllowedException();
             case Dispatcher::NOT_FOUND:
-                throw new MethodNotFoundException();
+                throw new NotFoundException();
             default:
-                throw new MethodNotFoundException();
+                throw new NotFoundException();
         }
 
         $next($request, $response);
