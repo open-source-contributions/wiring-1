@@ -5,23 +5,12 @@ namespace Wiring\Exception;
 interface HttpExceptionInterface
 {
     /**
-     * Return the status code of the http exceptions.
-     *
-     * @return integer
+     * @return \Psr\Http\Message\ServerRequestInterface
      */
-    public function getStatusCode();
+    public function getRequest();
 
     /**
-     * Return an array of headers provided when the exception was thrown.
-     *
-     * @return array
+     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function getHeaders();
-
-    /**
-     * Returns a response built from the thrown exception.
-     *
-     * @return \Zend\Diactoros\Response\JsonResponse
-     */
-    public function getJsonResponse();
+    public function getResponse();
 }

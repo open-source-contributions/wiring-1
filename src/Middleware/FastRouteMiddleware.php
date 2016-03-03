@@ -3,13 +3,21 @@
 namespace Wiring\Middleware;
 
 use FastRoute\Dispatcher;
+use Interop\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Wiring\Exception\MethodNotAllowedException;
+use Wiring\Exception\MethodNotAllowedHandlerInterface;
 use Wiring\Exception\NotFoundException;
+use Wiring\Exception\NotFoundHandlerInterface;
 
 class FastRouteMiddleware implements MiddlewareInterface
 {
+    /**
+     * @var \Interop\Container\ContainerInterface
+     */
+    protected $container;
+
     /**
      * @var \FastRoute\Dispatcher
      */
@@ -21,11 +29,13 @@ class FastRouteMiddleware implements MiddlewareInterface
     protected $attribute;
 
     /**
+     * @param \Interop\Container\ContainerInterface $container
      * @param \FastRoute\Dispatcher $fastRoute
      * @param string $attribute
      */
-    public function __construct(Dispatcher $fastRoute = null, $attribute = "__callable")
+    public function __construct(ContainerInterface $container, Dispatcher $fastRoute = null, $attribute = "__callable")
     {
+        $this->container = $container;
         $this->fastRoute = $fastRoute;
         $this->attribute = $attribute;
     }
@@ -43,24 +53,34 @@ class FastRouteMiddleware implements MiddlewareInterface
     {
         $routeInfo = $this->fastRoute->dispatch($request->getMethod(), $request->getUri()->getPath());
 
-        switch ($routeInfo[0]) {
-            case Dispatcher::FOUND:
-                // Get request params
-                foreach ($routeInfo[2] as $param => $value) {
-                    $request = $request->withAttribute($param, $value);
-                }
-                // Get request with attribute
-                $request = $request->withAttribute($this->attribute, $routeInfo[1]);
-                break;
-            case Dispatcher::METHOD_NOT_ALLOWED:
-                throw new MethodNotAllowedException();
-            case Dispatcher::NOT_FOUND:
-                throw new NotFoundException();
-            default:
-                throw new NotFoundException();
+        if ($routeInfo[0] == Dispatcher::FOUND) {
+            // Get request params
+            foreach ($routeInfo[2] as $param => $value) {
+                $request = $request->withAttribute($param, $value);
+            }
+            // Get request with attribute
+            $request = $request->withAttribute($this->attribute, $routeInfo[1]);
+            return $next($request, $response);
         }
 
-        $next($request, $response);
+        if ($routeInfo[0] == Dispatcher::METHOD_NOT_ALLOWED) {
+            // Check has handler
+            if (!$this->container->has(MethodNotAllowedHandlerInterface::class)) {
+                throw new MethodNotAllowedException($request, $response, $routeInfo[1]);
+            }
+            /** @var callable $notAllowedHandler */
+            $notAllowedHandler = $this->container->get(MethodNotAllowedHandlerInterface::class);
+            return $notAllowedHandler($request, $response, $routeInfo[1]);
+        }
+
+        // Check has handler
+        if (!$this->container->has(NotFoundHandlerInterface::class)) {
+            throw new NotFoundException($request, $response);
+        }
+
+        /** @var callable $notFoundHandler */
+        $notFoundHandler = $this->container->get(NotFoundHandlerInterface::class);
+        return $notFoundHandler($request, $response);
     }
 
     /**

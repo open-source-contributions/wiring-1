@@ -2,70 +2,48 @@
 
 namespace Wiring\Exception;
 
-use Zend\Diactoros\Response\JsonResponse;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class HttpException extends \Exception implements HttpExceptionInterface
 {
     /**
-     * @var int
+     * @var \Psr\Http\Message\ServerRequestInterface
      */
-    protected $statusCode;
+    protected $request;
 
     /**
-     * @var array
+     * @var \Psr\Http\Message\ResponseInterface
      */
-    protected $headers = [];
+    protected $response;
 
     /**
-     * HttpException constructor.
+     * Http exception constructor.
      *
-     * @param null $message
-     * @param int $statusCode
-     * @param \Exception|null $previous
-     * @param array $headers
-     * @param int $code
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
      */
-    public function __construct($message = null, $statusCode,
-                                \Exception $previous = null, array $headers = [], $code = 0)
+    public function __construct(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $this->statusCode = $statusCode;
-        $this->headers = $headers;
+        parent::__construct();
 
-        parent::__construct($message, $code, $previous);
+        $this->request = $request;
+        $this->response = $response;
     }
 
     /**
-     * Return the status code of the http exceptions.
-     *
-     * @return int
+     * @return \Psr\Http\Message\ServerRequestInterface
      */
-    public function getStatusCode()
+    public function getRequest()
     {
-        return $this->statusCode;
+        return $this->request;
     }
 
     /**
-     * Return an array of headers provided when the exception was thrown.
-     *
-     * @return array
+     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function getHeaders()
+    public function getResponse()
     {
-        return $this->headers;
-    }
-
-    /**
-     * Returns a response built from the thrown exception.
-     *
-     * @return \Zend\Diactoros\Response\JsonResponse
-     */
-    public function getJsonResponse()
-    {
-        $data = [
-            'message' => $this->getMessage(),
-            'code' => $this->getStatusCode()
-        ];
-
-        return new JsonResponse($data, $this->getStatusCode(), $this->getHeaders());
+        return $this->response;
     }
 }

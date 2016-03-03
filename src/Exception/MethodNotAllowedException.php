@@ -2,23 +2,40 @@
 
 namespace Wiring\Exception;
 
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
+
 class MethodNotAllowedException extends HttpException
 {
     /**
-     * MethodNotAllowedException constructor.
+     * HTTP methods allowed.
      *
-     * @param array $allowed
-     * @param string $message
-     * @param \Exception|null $previous
-     * @param int $code
+     * @var string[]
      */
-    public function __construct(array $allowed = [], $message = 'Method Not Allowed',
-                                \Exception $previous = null, $code = 0)
-    {
-        $headers = [
-            'Allow' => implode(', ', $allowed)
-        ];
+    protected $allowedMethods;
 
-        parent::__construct($message, 405, $previous, $headers, $code);
+    /**
+     * Create MethodNotAllowed exception.
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param string[] $allowedMethods
+     */
+    public function __construct(ServerRequestInterface $request, ResponseInterface $response, array $allowedMethods)
+    {
+        $response->withStatus(405);
+        parent::__construct($request, $response);
+
+        $this->allowedMethods = $allowedMethods;
+    }
+
+    /**
+     * Get allowed methods.
+     *
+     * @return string[]
+     */
+    public function getAllowedMethods()
+    {
+        return $this->allowedMethods;
     }
 }

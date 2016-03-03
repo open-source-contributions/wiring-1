@@ -2,17 +2,20 @@
 
 namespace Wiring\Exception;
 
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
+
 class NotFoundException extends HttpException
 {
     /**
-     * NotFoundException constructor.
+     * Create NotFound exception.
      *
-     * @param string $message
-     * @param \Exception|null $previous
-     * @param int $code
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \Psr\Http\Message\ResponseInterface $response
      */
-    public function __construct($message = 'Not Found', \Exception $previous = null, $code = 0)
+    public function __construct(ServerRequestInterface $request, ResponseInterface $response)
     {
-        parent::__construct($message, 404, $previous, [], $code);
+        $response->withStatus(404);
+        parent::__construct($request, $response);
     }
 }
