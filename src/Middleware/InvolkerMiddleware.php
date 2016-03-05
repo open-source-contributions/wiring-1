@@ -2,11 +2,21 @@
 
 namespace Wiring\Middleware;
 
+use Exception;
+use Throwable;
+use Interop\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Wiring\Exception\ErrorHandler;
+use Wiring\Exception\ErrorHandlerInterface;
 
 class InvolkerMiddleware
 {
+    /**
+     * @var \Interop\Container\ContainerInterface
+     */
+    protected $container;
+
     /**
      * @var \Psr\Http\Message\ServerRequestInterface
      */
@@ -47,9 +57,11 @@ class InvolkerMiddleware
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
+     * @param \Interop\Container\ContainerInterface $container
      */
-    public function __construct(ServerRequestInterface $request, ResponseInterface $response)
+    public function __construct(ContainerInterface $container, ServerRequestInterface $request, ResponseInterface $response)
     {
+        $this->container = $container;
         $this->request = $request;
         $this->response = $response;
     }
@@ -64,28 +76,36 @@ class InvolkerMiddleware
      */
     public function __invoke(ServerRequestInterface $request = null, ResponseInterface $response = null)
     {
-        if ($request !== null) {
-            $this->request = $request;
+        try {
+
+            if ($request !== null) {
+                $this->request = $request;
+            }
+
+            if ($response !== null) {
+                $this->response = $response;
+            }
+
+            // Retrieving key of the middleware
+            if ($this->isAfterMiddleware() === true) {
+                $key = &$this->afterMiddleware;
+            } else {
+                $key = &$this->beforeMiddleware;
+            }
+
+            $key = $this->getNextMiddleware($key + 1, $this->isAfterMiddleware());
+
+            if ($key === null) {
+                return;
+            }
+
+            $this->callNextMiddleware($this->middlewares[$key]["callable"]);
+
+        } catch (Exception $e) {
+            $this->errorHandler($e, $this->request, $this->response);
+        } catch (Throwable $e) {
+            $this->errorHandler($e, $this->request, $this->response);
         }
-
-        if ($response !== null) {
-            $this->response = $response;
-        }
-
-        // Retrieving key of the middleware
-        if ($this->isAfterMiddleware() === true) {
-            $key = &$this->afterMiddleware;
-        } else {
-            $key = &$this->beforeMiddleware;
-        }
-
-        $key = $this->getNextMiddleware($key + 1, $this->isAfterMiddleware());
-
-        if ($key === null) {
-            return;
-        }
-
-        $this->callNextMiddleware($this->middlewares[$key]["callable"]);
     }
 
     /**
@@ -290,5 +310,26 @@ class InvolkerMiddleware
     public function setFinished($finished)
     {
         $this->finished = $finished;
+    }
+
+    /**
+     * Error handler.
+     *
+     * @param \Exception|\Throwable $error
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @return mixed
+     * @throws ErrorHandler
+     */
+    protected function errorHandler($error, ServerRequestInterface $request, ResponseInterface $response)
+    {
+        // Check has handler
+        if (!$this->container->has(ErrorHandlerInterface::class)) {
+            throw new ErrorHandler($request, $response, $error);
+        }
+
+        /** @var callable $errorHandler */
+        $errorHandler = $this->container->get(ErrorHandlerInterface::class);
+        return $errorHandler($request, $response, $error);
     }
 }

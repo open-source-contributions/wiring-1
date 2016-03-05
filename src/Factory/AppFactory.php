@@ -3,7 +3,6 @@
 namespace Wiring\Factory;
 
 use Wiring\Middleware\InvolkerMiddleware;
-use Wiring\Middleware\MiddlewareInterface;
 
 class AppFactory extends InvolkerMiddleware
 {
