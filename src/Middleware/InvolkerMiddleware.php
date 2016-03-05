@@ -7,8 +7,9 @@ use Throwable;
 use Interop\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Wiring\Exception\ErrorHandler;
-use Wiring\Exception\ErrorHandlerInterface;
+use Wiring\Exception\NotFoundException;
+use Wiring\Handler\ErrorHandler;
+use Wiring\Handler\ErrorHandlerInterface;
 
 class InvolkerMiddleware
 {
@@ -319,7 +320,7 @@ class InvolkerMiddleware
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @return mixed
-     * @throws ErrorHandler
+     * @throws \Wiring\Handler\ErrorHandler
      */
     protected function errorHandler($error, ServerRequestInterface $request, ResponseInterface $response)
     {
