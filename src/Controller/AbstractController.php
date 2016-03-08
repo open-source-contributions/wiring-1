@@ -4,7 +4,7 @@ namespace Wiring\Controller;
 
 use Interop\Container\ContainerInterface;
 
-abstract class AbstractController implements ContainerInterface
+abstract class AbstractController implements ControllerInterface
 {
     /**
      * @var \Interop\Container\ContainerInterface
@@ -22,10 +22,10 @@ abstract class AbstractController implements ContainerInterface
     }
 
     /**
-     * Get container.
+     * Get an entry of the container by its identifier and returns it.
      *
-     * @param string $id
-     * @return \Interop\Container\ContainerInterface
+     * @param string $id Identifier of the entry to look for.
+     * @return mixed Entry.
      */
     public function get($id)
     {
@@ -33,10 +33,10 @@ abstract class AbstractController implements ContainerInterface
     }
 
     /**
-     * Check container.
+     * Check if the container can return an entry for the given identifier.
      *
-     * @param string $id
-     * @return \Interop\Container\ContainerInterface
+     * @param string $id Identifier of the entry to look for.
+     * @return boolean
      */
     public function has($id)
     {
