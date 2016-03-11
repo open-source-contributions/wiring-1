@@ -4,6 +4,7 @@ namespace Wiring\Controller;
 
 use Exception;
 use Interop\Container\ContainerInterface;
+use Wiring\Provider\DatabaseInterface;
 
 abstract class AbstractController implements ControllerInterface
 {
@@ -101,5 +102,20 @@ abstract class AbstractController implements ControllerInterface
         }
 
         return $this->container->set($name, $value);
+    }
+
+    /**
+     * Return database conection.
+     *
+     * @return \Doctrine\DBAL\Connection
+     * @throws Exception
+     */
+    public function database()
+    {
+        if (!$this->has(DatabaseInterface::class)) {
+            throw new Exception('Database interface not defined');
+        }
+
+        return $this->get(DatabaseInterface::class);
     }
 }

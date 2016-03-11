@@ -57,4 +57,12 @@ interface ControllerInterface
      * @throws \Exception
      */
     public function set($name, $value);
+
+    /**
+     * Return database conection.
+     *
+     * @return \Doctrine\DBAL\Connection
+     * @throws \Exception
+     */
+    public function database();
 }
