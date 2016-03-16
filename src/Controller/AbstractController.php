@@ -4,6 +4,7 @@ namespace Wiring\Controller;
 
 use Exception;
 use Interop\Container\ContainerInterface;
+use Wiring\Factory\ApplicationInterface;
 use Wiring\Provider\DatabaseInterface;
 
 abstract class AbstractController implements ControllerInterface
@@ -102,6 +103,21 @@ abstract class AbstractController implements ControllerInterface
         }
 
         return $this->container->set($name, $value);
+    }
+
+    /**
+     * Return application.
+     *
+     * @return \Wiring\Factory\AppFactory
+     * @throws Exception
+     */
+    public function app()
+    {
+        if (!$this->has(ApplicationInterface::class)) {
+            throw new Exception('Application interface not defined');
+        }
+
+        return $this->get(ApplicationInterface::class);
     }
 
     /**

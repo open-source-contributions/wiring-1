@@ -4,10 +4,10 @@ namespace Wiring\Middleware;
 
 use Exception;
 use Throwable;
+use Wiring\Factory\ApplicationInterface;
 use Interop\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Wiring\Exception\NotFoundException;
 use Wiring\Handler\ErrorHandler;
 use Wiring\Handler\ErrorHandlerInterface;
 
@@ -44,6 +44,11 @@ class InvolkerMiddleware
     protected $beforeMiddleware = -1;
 
     /**
+     * @var array
+     */
+    protected $middlewareController = [];
+
+    /**
      * @ bool
      */
     protected $isAfterMiddleware = false;
@@ -65,6 +70,12 @@ class InvolkerMiddleware
         $this->container = $container;
         $this->request = $request;
         $this->response = $response;
+
+        // Check container set exist
+        if (method_exists($this->container, 'set')) {
+            // Inject self application for middlewares freedom
+            $this->container->set(ApplicationInterface::class, $this);
+        }
     }
 
     /**
@@ -311,6 +322,16 @@ class InvolkerMiddleware
     public function setFinished($finished)
     {
         $this->finished = $finished;
+    }
+
+    /**
+     * Return __invoke method.
+     *
+     * @return self
+     */
+    protected function invoker()
+    {
+        return $this();
     }
 
     /**
