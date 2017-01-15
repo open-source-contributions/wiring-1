@@ -10,8 +10,8 @@
         }
     ],
     "require": {
-        "php": "^5.5 || ^7.0",
-        "nikic/fast-route": "^1.0.0",
+        "php": "^7.0",
+        "nikic/fast-route": "^1.1",
         "container-interop/container-interop": "^1.1",
         "zendframework/zend-diactoros": "^1.3"
     },
