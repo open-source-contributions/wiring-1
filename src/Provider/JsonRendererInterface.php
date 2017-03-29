@@ -11,6 +11,7 @@ interface JsonRendererInterface
      *
      * @param array $data The data
      * @param int $encodingOptions JSON encoding options
+     *
      * @return self
      */
     public function render($data, $encodingOptions = 0);
@@ -19,6 +20,7 @@ interface JsonRendererInterface
      * Write JSON to data response.
      *
      * @param mixed $data The data
+     *
      * @return self
      */
     public function write($data);
@@ -28,6 +30,7 @@ interface JsonRendererInterface
      *
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param int $status
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function to(ResponseInterface $response, $status = 200);

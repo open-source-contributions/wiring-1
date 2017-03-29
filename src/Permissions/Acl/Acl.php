@@ -48,6 +48,7 @@ class Acl
 
     /**
      * @param UserAclInterface $user
+     *
      * @return self
      */
     public function setUser(UserAclInterface $user)
@@ -59,6 +60,7 @@ class Acl
 
     /**
      * @param $name
+     *
      * @return \Wiring\Permissions\Acl\Role|bool
      */
     public function hasRole($name)
@@ -79,6 +81,7 @@ class Acl
     /**
      * @param string $role
      * @param string $permission
+     *
      * @return bool
      */
     public function hasPermission($role, $permission)
@@ -102,6 +105,7 @@ class Acl
     /**
      * @param $permission
      * @param \Wiring\Permissions\Acl\UserAclInterface|null $user
+     *
      * @return bool
      */
     public function can($permission, UserAclInterface $user = null)
@@ -123,6 +127,7 @@ class Acl
     /**
      * @param $permission
      * @param UserAclInterface|null $user
+     *
      * @return bool
      */
     public function cannot($permission, UserAclInterface $user = null)

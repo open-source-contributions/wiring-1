@@ -2,14 +2,14 @@
 
 namespace Wiring\Middleware;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class DispatcherMiddleware implements MiddlewareInterface
 {
     /**
-     * @var \Interop\Container\ContainerInterface
+     * @var \Psr\Container\ContainerInterface
      */
     protected $container;
 
@@ -19,24 +19,32 @@ class DispatcherMiddleware implements MiddlewareInterface
     protected $attribute;
 
     /**
-     * @param \Interop\Container\ContainerInterface
+     * Dispatcher constructor.
+     *
+     * @param \Psr\Container\ContainerInterface
      * @param string $attribute
+     *
+     * @throws \Exception
      */
     public function __construct(ContainerInterface $container = null, $attribute = "__callable")
     {
-        if ($container !== null) {
-            $this->container = $container;
+        if ($container === null) {
+            throw new \Exception("Container not found!");
         }
 
+        $this->container = $container;
         $this->attribute = $attribute;
     }
 
     /**
+     * Called when the object is called as a function.
+     *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param callable|null $next
      *
      * @throws \Exception
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next = null)
@@ -44,7 +52,7 @@ class DispatcherMiddleware implements MiddlewareInterface
         $callable = $request->getAttribute($this->attribute);
 
         if ($callable === null) {
-            throw new \Exception("Dispatchable callable not found!");
+            throw new \Exception("Dispatch callable not found!");
         }
 
         if (is_array($callable) && is_string($callable[0])) {
@@ -68,6 +76,46 @@ class DispatcherMiddleware implements MiddlewareInterface
             $response = $reflection->invoke($callable, $request, $response);
         }
 
-        $next($request, $response);
+        return $next($request, $response);
+    }
+
+    /**
+     * Get dependency injection container.
+     *
+     * @return \Psr\Container\ContainerInterface
+     */
+    public function getContainer()
+    {
+        return $this->container;
+    }
+
+    /**
+     * Set dependency injection container.
+     *
+     * @param \Psr\Container\ContainerInterface $container
+     */
+    public function setContainer($container)
+    {
+        $this->container = $container;
+    }
+
+    /**
+     * Get action attribute name.
+     *
+     * @return string
+     */
+    public function getAttribute()
+    {
+        return $this->attribute;
+    }
+
+    /**
+     * Set action attribute name.
+     *
+     * @param string $attribute
+     */
+    public function setAttribute($attribute)
+    {
+        $this->attribute = $attribute;
     }
 }

@@ -27,6 +27,7 @@ class JsonRenderer implements JsonRendererInterface
      *
      * @param array $data The data
      * @param int $encodingOptions JSON encoding options
+     *
      * @return self
      */
     public function render($data, $encodingOptions = 0)
@@ -42,6 +43,7 @@ class JsonRenderer implements JsonRendererInterface
      * Write JSON to data response.
      *
      * @param mixed $data The data
+     *
      * @return self
      */
     public function write($data)
@@ -57,6 +59,7 @@ class JsonRenderer implements JsonRendererInterface
      *
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param int $status
+     *
      * @return mixed
      */
     public function to(ResponseInterface $response, $status = 200)
@@ -75,7 +78,9 @@ class JsonRenderer implements JsonRendererInterface
      *
      * @param array $data The data
      * @param int $encodingOptions JSON encoding options
+     *
      * @return string JSON
+     *
      * @throws InvalidArgumentException if unable to encode the $data to JSON
      */
     private function jsonEncode($data, $encodingOptions)

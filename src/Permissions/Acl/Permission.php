@@ -29,6 +29,7 @@ class Permission
 
     /**
      * @param string $name
+     *
      * @return Permission
      */
     public function setName($name)

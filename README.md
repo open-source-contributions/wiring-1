@@ -63,8 +63,8 @@ Use Wiring [Skeleton](https://github.com/aracaw/wiring-skeleton.git):
 Requirements
 ------------
 
-PHP 5.5 or above (PHP 7 recommended to avoid potential bugs).
+PHP 7.0 or above.
 
 ##Copyright and license
 
-Code and documentation copyright (c) 2016, Code released under the BSD-3-Clause license.
+Code and documentation copyright (c) 2017, Code released under the BSD-3-Clause license.

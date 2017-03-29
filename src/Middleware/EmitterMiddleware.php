@@ -36,6 +36,6 @@ class EmitterMiddleware implements MiddlewareInterface
             $this->emitter->emit($response);
         }
 
-        $next($request, $response);
+        return $next($request, $response);
     }
 }

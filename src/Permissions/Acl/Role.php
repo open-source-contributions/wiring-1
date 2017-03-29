@@ -34,6 +34,7 @@ class Role
 
     /**
      * @param string $name
+     *
      * @return self
      */
     public function setName($name)
@@ -53,6 +54,7 @@ class Role
 
     /**
      * @param Permission $permission
+     *
      * @return self
      */
     public function addPermission(Permission $permission)

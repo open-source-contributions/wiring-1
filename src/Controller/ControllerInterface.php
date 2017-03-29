@@ -8,6 +8,7 @@ interface ControllerInterface
      * Get an entry of the container by its identifier and returns it.
      *
      * @param string $id Identifier of the entry to look for.
+     *
      * @return mixed Entry.
      */
     public function get($id);
@@ -16,6 +17,7 @@ interface ControllerInterface
      * Check if the container can return an entry for the given identifier.
      *
      * @param string $id Identifier of the entry to look for.
+     *
      * @return boolean
      */
     public function has($id);
@@ -30,6 +32,7 @@ interface ControllerInterface
      *                           be automatically resolved.
      *
      * @throws \Exception       Error while resolving the entry.
+     *
      * @return mixed
      */
     public function make($name, array $parameters = []);
@@ -45,6 +48,7 @@ interface ControllerInterface
      *                             The array can also contain DI definitions, e.g. DI\get().
      *
      * @throws \Exception
+     *
      * @return mixed Result of the function.
      */
     public function call($callable, array $parameters = []);
@@ -54,15 +58,17 @@ interface ControllerInterface
      *
      * @param string $name Entry name
      * @param mixed $value Value, use definition helpers to define objects
+     *
      * @throws \Exception
      */
     public function set($name, $value);
 
     /**
-     * Return database conection.
+     * Return database connection.
      *
-     * @return \Doctrine\DBAL\Connection
      * @throws \Exception
+     *
+     * @return \Wiring\Provider\DatabaseInterface
      */
     public function database();
 }

@@ -3,7 +3,7 @@
 namespace Wiring\Middleware;
 
 use FastRoute\Dispatcher;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Wiring\Exception\MethodNotAllowedException;
@@ -14,7 +14,7 @@ use Wiring\Exception\NotFoundHandlerInterface;
 class FastRouteMiddleware implements MiddlewareInterface
 {
     /**
-     * @var \Interop\Container\ContainerInterface
+     * @var \Psr\Container\ContainerInterface
      */
     protected $container;
 
@@ -29,7 +29,7 @@ class FastRouteMiddleware implements MiddlewareInterface
     protected $attribute;
 
     /**
-     * @param \Interop\Container\ContainerInterface $container
+     * @param \Psr\Container\ContainerInterface $container
      * @param \FastRoute\Dispatcher $fastRoute
      * @param string $attribute
      */
@@ -47,6 +47,7 @@ class FastRouteMiddleware implements MiddlewareInterface
      *
      * @throws \Wiring\Exception\MethodNotAllowedException
      * @throws \Wiring\Exception\NotFoundException
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next = null)
@@ -84,6 +85,26 @@ class FastRouteMiddleware implements MiddlewareInterface
     }
 
     /**
+     * Get dependency injection container.
+     *
+     * @return \Psr\Container\ContainerInterface
+     */
+    public function getContainer()
+    {
+        return $this->container;
+    }
+
+    /**
+     * Set dependency injection container.
+     *
+     * @param \Psr\Container\ContainerInterface $container
+     */
+    public function setContainer($container)
+    {
+        $this->container = $container;
+    }
+
+    /**
      * @return \FastRoute\Dispatcher
      */
     public function getFastRoute()
@@ -100,6 +121,8 @@ class FastRouteMiddleware implements MiddlewareInterface
     }
 
     /**
+     * Get action attribute name.
+     *
      * @return string
      */
     public function getAttribute()
@@ -108,6 +131,8 @@ class FastRouteMiddleware implements MiddlewareInterface
     }
 
     /**
+     * Set action attribute name.
+     *
      * @param string $attribute
      */
     public function setAttribute($attribute)

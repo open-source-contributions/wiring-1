@@ -3,21 +3,21 @@
 namespace Wiring\Controller;
 
 use Exception;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Wiring\Factory\ApplicationInterface;
 use Wiring\Provider\DatabaseInterface;
 
 abstract class AbstractController implements ControllerInterface
 {
     /**
-     * @var \Interop\Container\ContainerInterface
+     * @var \Psr\Container\ContainerInterface
      */
     protected $container;
 
     /**
      * Create container.
      *
-     * @param \Interop\Container\ContainerInterface $container
+     * @param \Psr\Container\ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
     {
@@ -28,6 +28,7 @@ abstract class AbstractController implements ControllerInterface
      * Get an entry of the container by its identifier and returns it.
      *
      * @param string $id Identifier of the entry to look for.
+     *
      * @return mixed Entry.
      */
     public function get($id)
@@ -39,6 +40,7 @@ abstract class AbstractController implements ControllerInterface
      * Check if the container can return an entry for the given identifier.
      *
      * @param string $id Identifier of the entry to look for.
+     *
      * @return boolean
      */
     public function has($id)
@@ -56,6 +58,7 @@ abstract class AbstractController implements ControllerInterface
      *                           be automatically resolved.
      *
      * @throws \Exception       Error while resolving the entry.
+     *
      * @return mixed
      */
     public function make($name, array $parameters = [])
@@ -78,6 +81,7 @@ abstract class AbstractController implements ControllerInterface
      *                             The array can also contain DI definitions, e.g. DI\get().
      *
      * @throws \Exception
+     *
      * @return mixed Result of the function.
      */
     public function call($callable, array $parameters = [])
@@ -93,7 +97,8 @@ abstract class AbstractController implements ControllerInterface
      * Define an object or a value in the container.
      *
      * @param string $name Entry name
-     * @param mixed $value Value, use definition helpers to define objects
+     * @param mixed $value Value, use definition helpers to define objects.
+     *
      * @throws \Exception
      */
     public function set($name, $value)
@@ -108,8 +113,9 @@ abstract class AbstractController implements ControllerInterface
     /**
      * Return application.
      *
-     * @return \Wiring\Factory\AppFactory
      * @throws Exception
+     *
+     * @return \Wiring\Factory\AppFactory
      */
     public function app()
     {
@@ -121,10 +127,11 @@ abstract class AbstractController implements ControllerInterface
     }
 
     /**
-     * Return database conection.
+     * Return database connection.
      *
-     * @return \Doctrine\DBAL\Connection
      * @throws Exception
+     *
+     * @return \Wiring\Provider\DatabaseInterface
      */
     public function database()
     {

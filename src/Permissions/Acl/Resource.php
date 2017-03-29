@@ -36,6 +36,7 @@ class Resource
 
     /**
      * @param string $name
+     *
      * @return self
      */
     public function setName($name)
@@ -55,6 +56,7 @@ class Resource
 
     /**
      * @param string $ownerField
+     *
      * @return self
      */
     public function setOwnerField($ownerField)

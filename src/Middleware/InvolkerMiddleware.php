@@ -5,7 +5,7 @@ namespace Wiring\Middleware;
 use Exception;
 use Throwable;
 use Wiring\Factory\ApplicationInterface;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Wiring\Handler\ErrorHandler;
@@ -14,7 +14,7 @@ use Wiring\Handler\ErrorHandlerInterface;
 class InvolkerMiddleware
 {
     /**
-     * @var \Interop\Container\ContainerInterface
+     * @var \Psr\Container\ContainerInterface
      */
     protected $container;
 
@@ -63,7 +63,7 @@ class InvolkerMiddleware
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
-     * @param \Interop\Container\ContainerInterface $container
+     * @param \Psr\Container\ContainerInterface $container
      */
     public function __construct(ContainerInterface $container, ServerRequestInterface $request, ResponseInterface $response)
     {
@@ -108,7 +108,7 @@ class InvolkerMiddleware
             $key = $this->getNextMiddleware($key + 1, $this->isAfterMiddleware());
 
             if ($key === null) {
-                return;
+                return null;
             }
 
             $this->callNextMiddleware($this->middlewares[$key]["callable"]);
@@ -136,6 +136,7 @@ class InvolkerMiddleware
      * Add router middleware.
      *
      * @param \Wiring\Middleware\MiddlewareInterface $router
+     *
      * @return self
      */
     public function addRouterMiddleware(MiddlewareInterface $router)
@@ -149,6 +150,7 @@ class InvolkerMiddleware
      * Add dispatcher middleware.
      *
      * @param \Wiring\Middleware\MiddlewareInterface $dispatcher
+     *
      * @return self
      */
     public function addDispatcherMiddleware(MiddlewareInterface $dispatcher)
@@ -162,6 +164,7 @@ class InvolkerMiddleware
      * Add emitter middleware.
      *
      * @param \Wiring\Middleware\MiddlewareInterface $emitter
+     *
      * @return self
      */
     public function addEmitterMiddleware(MiddlewareInterface $emitter)
@@ -175,6 +178,7 @@ class InvolkerMiddleware
      * Get middleware.
      *
      * @param string $key
+     *
      * @return null|callable
      */
     public function getMiddleware($key)
@@ -193,6 +197,7 @@ class InvolkerMiddleware
      *
      * @param string $key
      * @param callable $middleware
+     *
      * @return self
      */
     public function addMiddleware($key, callable $middleware)
@@ -207,6 +212,7 @@ class InvolkerMiddleware
      *
      * @param string $key
      * @param callable $middleware
+     *
      * @return self
      */
     public function addAfterMiddleware($key, callable $middleware)
@@ -220,6 +226,7 @@ class InvolkerMiddleware
      * Remove middleware.
      *
      * @param string $key
+     *
      * @return self
      */
     public function removeMiddleware($key)
@@ -237,6 +244,7 @@ class InvolkerMiddleware
      * Find middleware by key.
      *
      * @param string $key
+     *
      * @return null|string
      */
     protected function findMiddleware($key)
@@ -255,6 +263,7 @@ class InvolkerMiddleware
      *
      * @param string $key
      * @param bool $isAfter
+     *
      * @return null|string
      */
     protected function getNextMiddleware($key, $isAfter)
@@ -300,6 +309,7 @@ class InvolkerMiddleware
 
     /**
      * @param mixed $isAfterMiddleware
+     *
      * @return InvolkerMiddleware
      */
     public function setIsAfterMiddleware($isAfterMiddleware)
@@ -325,9 +335,29 @@ class InvolkerMiddleware
     }
 
     /**
+     * Get dependency injection container.
+     *
+     * @return \Psr\Container\ContainerInterface
+     */
+    public function getContainer()
+    {
+        return $this->container;
+    }
+
+    /**
+     * Set dependency injection container.
+     *
+     * @param \Psr\Container\ContainerInterface $container
+     */
+    public function setContainer($container)
+    {
+        $this->container = $container;
+    }
+
+    /**
      * Return __invoke method.
      *
-     * @return self
+     * @return ResponseInterface
      */
     protected function invoker()
     {
@@ -340,8 +370,10 @@ class InvolkerMiddleware
      * @param \Exception|\Throwable $error
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
-     * @return mixed
+     *
      * @throws \Wiring\Handler\ErrorHandler
+     *
+     * @return mixed
      */
     protected function errorHandler($error, ServerRequestInterface $request, ResponseInterface $response)
     {

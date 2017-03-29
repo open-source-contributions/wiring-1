@@ -12,6 +12,7 @@ class AbstractRestfulController extends AbstractJsonController implements Restfu
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
+     *
      * @return \Psr\Http\Message\ResponseInterface $response
      */
     public function index(ServerRequestInterface $request, ResponseInterface $response)
@@ -26,6 +27,7 @@ class AbstractRestfulController extends AbstractJsonController implements Restfu
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
+     *
      * @return \Psr\Http\Message\ResponseInterface $response
      */
     public function read(ServerRequestInterface $request, ResponseInterface $response)
@@ -40,6 +42,7 @@ class AbstractRestfulController extends AbstractJsonController implements Restfu
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
+     *
      * @return \Psr\Http\Message\ResponseInterface $response
      */
     public function create(ServerRequestInterface $request, ResponseInterface $response)
@@ -54,6 +57,7 @@ class AbstractRestfulController extends AbstractJsonController implements Restfu
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
+     *
      * @return \Psr\Http\Message\ResponseInterface $response
      */
     public function update(ServerRequestInterface $request, ResponseInterface $response)
@@ -68,6 +72,7 @@ class AbstractRestfulController extends AbstractJsonController implements Restfu
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
+     *
      * @return \Psr\Http\Message\ResponseInterface $response
      */
     public function delete(ServerRequestInterface $request, ResponseInterface $response)
@@ -83,6 +88,7 @@ class AbstractRestfulController extends AbstractJsonController implements Restfu
      * @param string $message
      * @param int $status
      * @param array $data
+     *
      * @return array
      */
     public function success($message = 'OK', $status = 200, $data = [])
@@ -98,6 +104,7 @@ class AbstractRestfulController extends AbstractJsonController implements Restfu
      * @param string $message
      * @param int $status
      * @param array $data
+     *
      * @return array
      */
     public function error($message = 'Bad Request', $status = 400, $data = [])
@@ -113,6 +120,7 @@ class AbstractRestfulController extends AbstractJsonController implements Restfu
      * @param string $message
      * @param int $status
      * @param array $data
+     *
      * @return array
      */
     public function fail($message = 'Internal Server Error', $status = 500, $data = [])
@@ -129,6 +137,7 @@ class AbstractRestfulController extends AbstractJsonController implements Restfu
      * @param string $message
      * @param int $code
      * @param array $data
+     *
      * @return array
      */
     public function data($status, $message = 'OK', $code = 200, $data = [])

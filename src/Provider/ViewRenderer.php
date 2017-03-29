@@ -56,6 +56,7 @@ class ViewRenderer implements ViewRendererInterface
      *
      * @param string $view Template view name
      * @param array $params View params
+     *
      * @return self
      */
     public function render($view, array $params = [])
@@ -71,6 +72,7 @@ class ViewRenderer implements ViewRendererInterface
      * Write data to the stream.
      *
      * @param string $data The string that is to be written.
+     *
      * @return self
      */
     public function write($data)
@@ -86,6 +88,7 @@ class ViewRenderer implements ViewRendererInterface
      *
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param int $status
+     *
      * @return mixed
      */
     public function to(ResponseInterface $response, $status = 200)

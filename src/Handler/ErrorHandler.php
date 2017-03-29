@@ -62,6 +62,7 @@ class ErrorHandler extends HttpException
      * Return an error into an HTTP or JSON data array.
      *
      * @param string $title
+     *
      * @return array
      */
     public function error($title = null)
@@ -73,7 +74,7 @@ class ErrorHandler extends HttpException
         }
 
         $type = $this->request->getHeader('Content-Type');
-        $mesg = $this->exception->getMessage();
+        $msg = $this->exception->getMessage();
         $file = $this->exception->getFile();
         $line = $this->exception->getLine();
         $code = $this->exception->getCode();
@@ -90,7 +91,7 @@ class ErrorHandler extends HttpException
         // Check logger exist
         if ($this->logger !== null) {
             // Send error to log
-            $this->logger->addError($this->exception->getMessage());
+            $this->logger->error($this->exception->getMessage());
         }
 
         $this->isJson = isset($type[0]) && $type[0] == 'application/json';
@@ -110,7 +111,7 @@ class ErrorHandler extends HttpException
             // Check debug
             if ($this->debug) {
                 $error['details'] = [
-                    'message' => $mesg,
+                    'message' => $msg,
                     'file' => $file,
                     'line' => $line,
                     'code' => $code
@@ -122,7 +123,7 @@ class ErrorHandler extends HttpException
 
         // Define content-type to html
         $this->response->withHeader('Content-Type', 'text/html');
-        $message = sprintf('<span>%s</span>', htmlentities($mesg));
+        $message = sprintf('<span>%s</span>', htmlentities($msg));
 
         $error = [
             'type' => get_class($this->exception),
