@@ -2,25 +2,25 @@
 
 namespace Wiring\Controller;
 
-use Wiring\Provider\JsonRendererInterface;
-use Wiring\Provider\ViewRendererInterface;
+use Wiring\Interfaces\JsonRendererInterface;
+use Wiring\Interfaces\ViewRendererInterface;
 
 abstract class AbstractJsonViewController extends AbstractController
 {
     /**
-     * @var \Wiring\Provider\JsonRendererInterface
+     * @var \Wiring\Interfaces\JsonRendererInterface
      */
-    protected  $json;
+    protected $json;
 
     /**
-     * @var \Wiring\Provider\ViewRendererInterface
+     * @var \Wiring\Interfaces\ViewRendererInterface
      */
     protected $view;
 
     /**
      * Get JSON renderer.
      *
-     * @return \Wiring\Provider\JsonRendererInterface
+     * @return \Wiring\Interfaces\JsonRendererInterface
      */
     public function json()
     {
@@ -30,7 +30,7 @@ abstract class AbstractJsonViewController extends AbstractController
     /**
      * Get View renderer.
      *
-     * @return \Wiring\Provider\ViewRendererInterface
+     * @return \Wiring\Interfaces\ViewRendererInterface
      */
     public function view()
     {

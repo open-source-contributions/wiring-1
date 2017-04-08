@@ -3,13 +3,14 @@
 namespace Wiring\Middleware;
 
 use Exception;
-use Throwable;
-use Wiring\Factory\ApplicationInterface;
 use Psr\Container\ContainerInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Throwable;
 use Wiring\Handler\ErrorHandler;
-use Wiring\Handler\ErrorHandlerInterface;
+use Wiring\Interfaces\ApplicationInterface;
+use Wiring\Interfaces\ErrorHandlerInterface;
+use Wiring\Interfaces\MiddlewareInterface;
 
 class InvolkerMiddleware
 {
@@ -108,6 +109,7 @@ class InvolkerMiddleware
             $key = $this->getNextMiddleware($key + 1, $this->isAfterMiddleware());
 
             if ($key === null) {
+
                 return null;
             }
 
@@ -118,10 +120,12 @@ class InvolkerMiddleware
         } catch (Throwable $e) {
             $this->errorHandler($e, $this->request, $this->response);
         }
+
+        return null;
     }
 
     /**
-     * Call the after middlewares.
+     * Call the after middleware.
      */
     public function __destruct()
     {
@@ -135,7 +139,7 @@ class InvolkerMiddleware
     /**
      * Add router middleware.
      *
-     * @param \Wiring\Middleware\MiddlewareInterface $router
+     * @param \Wiring\Interfaces\MiddlewareInterface $router
      *
      * @return self
      */
@@ -149,7 +153,7 @@ class InvolkerMiddleware
     /**
      * Add dispatcher middleware.
      *
-     * @param \Wiring\Middleware\MiddlewareInterface $dispatcher
+     * @param \Wiring\Interfaces\MiddlewareInterface $dispatcher
      *
      * @return self
      */
@@ -163,7 +167,7 @@ class InvolkerMiddleware
     /**
      * Add emitter middleware.
      *
-     * @param \Wiring\Middleware\MiddlewareInterface $emitter
+     * @param \Wiring\Interfaces\MiddlewareInterface $emitter
      *
      * @return self
      */

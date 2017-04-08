@@ -2,6 +2,7 @@
 
 namespace Wiring\Factory;
 
+use Wiring\Interfaces\ApplicationInterface;
 use Wiring\Middleware\InvolkerMiddleware;
 
 class AppFactory extends InvolkerMiddleware implements ApplicationInterface

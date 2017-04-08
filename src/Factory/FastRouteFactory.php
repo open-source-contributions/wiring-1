@@ -5,7 +5,7 @@ namespace Wiring\Factory;
 use FastRoute;
 use FastRoute\RouteCollector;
 use ReflectionClass;
-use Wiring\Controller\RestfulControllerInterface;
+use Wiring\Interfaces\RestfulControllerInterface;
 
 class FastRouteFactory
 {

@@ -7,9 +7,10 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Wiring\Exception\MethodNotAllowedException;
-use Wiring\Exception\MethodNotAllowedHandlerInterface;
 use Wiring\Exception\NotFoundException;
-use Wiring\Exception\NotFoundHandlerInterface;
+use Wiring\Interfaces\MethodNotAllowedHandlerInterface;
+use Wiring\Interfaces\MiddlewareInterface;
+use Wiring\Interfaces\NotFoundHandlerInterface;
 
 class FastRouteMiddleware implements MiddlewareInterface
 {

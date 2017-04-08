@@ -1,6 +1,6 @@
 <?php
 
-namespace Wiring\Factory;
+namespace Wiring\Interfaces;
 
 interface ApplicationInterface
 {

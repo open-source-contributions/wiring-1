@@ -1,6 +1,6 @@
 <?php
 
-namespace Wiring\Provider;
+namespace Wiring\Interfaces;
 
 use Psr\Http\Message\ResponseInterface;
 

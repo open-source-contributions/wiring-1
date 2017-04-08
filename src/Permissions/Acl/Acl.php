@@ -2,6 +2,8 @@
 
 namespace Wiring\Permissions\Acl;
 
+use Wiring\Interfaces\UserAclInterface;
+
 class Acl
 {
     /**
@@ -15,7 +17,7 @@ class Acl
     protected $resources = [];
 
     /**
-     * @var \Wiring\Permissions\Acl\UserAclInterface
+     * @var \Wiring\Interfaces\UserAclInterface
      */
     protected $user;
 
@@ -104,7 +106,7 @@ class Acl
 
     /**
      * @param $permission
-     * @param \Wiring\Permissions\Acl\UserAclInterface|null $user
+     * @param \Wiring\Interfaces\UserAclInterface|null $user
      *
      * @return bool
      */

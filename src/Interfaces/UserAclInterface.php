@@ -1,6 +1,6 @@
 <?php
 
-namespace Wiring\Permissions\Acl;
+namespace Wiring\Interfaces;
 
 interface UserAclInterface
 {

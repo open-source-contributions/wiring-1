@@ -2,8 +2,9 @@
 
 namespace Wiring\Provider;
 
-use Psr\Http\Message\ResponseInterface;
 use InvalidArgumentException;
+use Psr\Http\Message\ResponseInterface;
+use Wiring\Interfaces\JsonRendererInterface;
 
 class JsonRenderer implements JsonRendererInterface
 {

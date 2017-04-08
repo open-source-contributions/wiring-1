@@ -1,6 +1,6 @@
 <?php
 
-namespace Wiring\Provider;
+namespace Wiring\Interfaces;
 
 interface RouterInterface {
     const NOT_FOUND = 0;

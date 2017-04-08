@@ -1,6 +1,6 @@
 <?php
 
-namespace Wiring\Controller;
+namespace Wiring\Interfaces;
 
 interface ControllerInterface
 {

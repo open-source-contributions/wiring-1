@@ -2,8 +2,9 @@
 
 namespace Wiring\Exception;
 
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Wiring\Interfaces\HttpExceptionInterface;
 
 class HttpException extends \Exception implements HttpExceptionInterface
 {

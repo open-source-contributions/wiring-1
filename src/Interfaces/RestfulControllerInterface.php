@@ -1,6 +1,6 @@
 <?php
 
-namespace Wiring\Controller;
+namespace Wiring\Interfaces;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;

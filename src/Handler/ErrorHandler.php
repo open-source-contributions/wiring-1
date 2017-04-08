@@ -2,10 +2,10 @@
 
 namespace Wiring\Handler;
 
-use Wiring\Exception\HttpException;
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
+use Wiring\Exception\HttpException;
 
 class ErrorHandler extends HttpException
 {

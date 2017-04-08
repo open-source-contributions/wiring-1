@@ -4,8 +4,9 @@ namespace Wiring\Controller;
 
 use Exception;
 use Psr\Container\ContainerInterface;
-use Wiring\Factory\ApplicationInterface;
-use Wiring\Provider\DatabaseInterface;
+use Wiring\Interfaces\ApplicationInterface;
+use Wiring\Interfaces\ControllerInterface;
+use Wiring\Interfaces\DatabaseInterface;
 
 abstract class AbstractController implements ControllerInterface
 {
@@ -131,7 +132,7 @@ abstract class AbstractController implements ControllerInterface
      *
      * @throws Exception
      *
-     * @return \Wiring\Provider\DatabaseInterface
+     * @return \Wiring\Interfaces\DatabaseInterface
      */
     public function database()
     {

@@ -2,19 +2,19 @@
 
 namespace Wiring\Controller;
 
-use Wiring\Provider\JsonRendererInterface;
+use Wiring\Interfaces\JsonRendererInterface;
 
 abstract class AbstractJsonController extends AbstractController
 {
     /**
-     * @var \Wiring\Provider\JsonRendererInterface
+     * @var \Wiring\Interfaces\JsonRendererInterface
      */
-    protected  $json;
+    protected $json;
 
     /**
      * Get JSON renderer.
      *
-     * @return \Wiring\Provider\JsonRendererInterface
+     * @return \Wiring\Interfaces\JsonRendererInterface
      */
     public function json()
     {

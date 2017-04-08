@@ -1,6 +1,6 @@
 <?php
 
-namespace Wiring\Handler;
+namespace Wiring\Interfaces;
 
 interface ErrorHandlerInterface
 {

@@ -4,6 +4,7 @@ namespace Wiring\Middleware;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Wiring\Interfaces\MiddlewareInterface;
 use Zend\Diactoros\Response\EmitterInterface;
 
 class EmitterMiddleware implements MiddlewareInterface

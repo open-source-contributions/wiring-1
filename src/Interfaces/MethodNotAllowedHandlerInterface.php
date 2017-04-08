@@ -1,6 +1,6 @@
 <?php
 
-namespace Wiring\Exception;
+namespace Wiring\Interfaces;
 
 interface MethodNotAllowedHandlerInterface
 {

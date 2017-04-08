@@ -3,6 +3,7 @@
 namespace Wiring\Provider;
 
 use Psr\Http\Message\ResponseInterface;
+use Wiring\Interfaces\ViewRendererInterface;
 
 class ViewRenderer implements ViewRendererInterface
 {

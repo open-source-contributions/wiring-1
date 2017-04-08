@@ -2,19 +2,19 @@
 
 namespace Wiring\Controller;
 
-use Wiring\Provider\ViewRendererInterface;
+use Wiring\Interfaces\ViewRendererInterface;
 
 abstract class AbstractViewController extends AbstractController
 {
     /**
-     * @var \Wiring\Provider\ViewRendererInterface
+     * @var \Wiring\Interfaces\ViewRendererInterface
      */
     protected $view;
 
     /**
      * Get View renderer.
      *
-     * @return \Wiring\Provider\ViewRendererInterface
+     * @return \Wiring\Interfaces\ViewRendererInterface
      */
     public function view()
     {
