@@ -28,10 +28,11 @@ class AbstractRestfulController extends AbstractJsonController implements Restfu
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
+     * @param array $args
      *
      * @return \Psr\Http\Message\ResponseInterface $response
      */
-    public function read(ServerRequestInterface $request, ResponseInterface $response)
+    public function read(ServerRequestInterface $request, ResponseInterface $response, array $args)
     {
         $data = $this->methodNotAllowed();
 
@@ -58,10 +59,11 @@ class AbstractRestfulController extends AbstractJsonController implements Restfu
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
+     * @param array $args
      *
      * @return \Psr\Http\Message\ResponseInterface $response
      */
-    public function update(ServerRequestInterface $request, ResponseInterface $response)
+    public function update(ServerRequestInterface $request, ResponseInterface $response, array $args)
     {
         $data = $this->methodNotAllowed();
 
@@ -73,10 +75,11 @@ class AbstractRestfulController extends AbstractJsonController implements Restfu
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
+     * @param array $args
      *
      * @return \Psr\Http\Message\ResponseInterface $response
      */
-    public function delete(ServerRequestInterface $request, ResponseInterface $response)
+    public function delete(ServerRequestInterface $request, ResponseInterface $response, array $args)
     {
         $data = $this->methodNotAllowed();
 

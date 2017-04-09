@@ -22,11 +22,12 @@ interface RestfulControllerInterface
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
+     * @param array $args
      *
      * @return \Psr\Http\Message\ResponseInterface $response
      */
-    public function read(ServerRequestInterface $request, ResponseInterface $response);
-    
+    public function read(ServerRequestInterface $request, ResponseInterface $response, array $args);
+
     /**
      * Create an existing resource.
      *
@@ -42,18 +43,20 @@ interface RestfulControllerInterface
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
+     * @param array $args
      *
      * @return \Psr\Http\Message\ResponseInterface $response
      */
-    public function update(ServerRequestInterface $request, ResponseInterface $response);
+    public function update(ServerRequestInterface $request, ResponseInterface $response, array $args);
 
     /**
      * Delete an existing resource.
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
+     * @param array $args
      *
      * @return \Psr\Http\Message\ResponseInterface $response
      */
-    public function delete(ServerRequestInterface $request, ResponseInterface $response);
+    public function delete(ServerRequestInterface $request, ResponseInterface $response, array $args);
 }
