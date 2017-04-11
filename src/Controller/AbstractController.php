@@ -5,8 +5,14 @@ namespace Wiring\Controller;
 use Exception;
 use Psr\Container\ContainerInterface;
 use Wiring\Interfaces\ApplicationInterface;
+use Wiring\Interfaces\AuthInterface;
+use Wiring\Interfaces\ConfigInterface;
 use Wiring\Interfaces\ControllerInterface;
+use Wiring\Interfaces\CsrfInterface;
 use Wiring\Interfaces\DatabaseInterface;
+use Wiring\Interfaces\FlashInterface;
+use Wiring\Interfaces\HashInterface;
+use Wiring\Interfaces\RouterInterface;
 
 abstract class AbstractController implements ControllerInterface
 {
@@ -128,6 +134,55 @@ abstract class AbstractController implements ControllerInterface
     }
 
     /**
+     * Get authentication.
+     *
+     * @throws Exception
+     *
+     * @return mixed
+     */
+    public function auth()
+    {
+        if (!$this->has(AuthInterface::class)) {
+            throw new Exception('Auth interface not defined');
+        }
+
+        return $this->get(AuthInterface::class);
+    }
+
+    /**
+     * Get settings properties.
+     *
+     * @param $key
+     * @throws Exception
+     *
+     * @return mixed
+     */
+    public function config($key)
+    {
+        if (!$this->has(ConfigInterface::class)) {
+            throw new Exception('Config interface not defined');
+        }
+
+        return $this->get(ConfigInterface::class)->get($key);
+    }
+
+    /**
+     * Get CSRF protection.
+     *
+     * @throws Exception
+     *
+     * @return mixed
+     */
+    public function csrf()
+    {
+        if (!$this->has(CsrfInterface::class)) {
+            throw new Exception('CSRF interface not defined');
+        }
+
+        return $this->get(CsrfInterface::class);
+    }
+
+    /**
      * Return database connection.
      *
      * @throws Exception
@@ -141,5 +196,107 @@ abstract class AbstractController implements ControllerInterface
         }
 
         return $this->get(DatabaseInterface::class);
+    }
+
+    /**
+     * Get flash messages.
+     *
+     * @param $type
+     * @param $message
+     * @throws Exception
+     */
+    public function flash($type, $message)
+    {
+        if (!$this->has(FlashInterface::class)) {
+            throw new Exception('Flash interface not defined');
+        }
+
+        return $this->get(FlashInterface::class)->addMessage($type, $message);
+    }
+
+    /**
+     * Get hash object.
+     *
+     * @throws Exception
+     *
+     * @return mixed
+     */
+    public function hash()
+    {
+        if (!$this->has(HashInterface::class)) {
+            throw new Exception('Hash interface not defined');
+        }
+
+        return $this->get(HashInterface::class);
+    }
+
+    /**
+     * Get message properties.
+     *
+     * @param $key
+     * @return mixed
+     */
+    public function lang($key)
+    {
+        return $this->config("lang." . $key);
+    }
+
+    /**
+     * Redirect.
+     *
+     * Note: This method is not part of the PSR-7 standard.
+     *
+     * This method prepares the response object to return an HTTP Redirect
+     * response to the client.
+     *
+     * @param Psr\Http\Message\ResponseInterface
+     * @param $url
+     * @param $status
+     *
+     * @return \Psr\Http\Message\ResponseInterface $request
+     */
+    public function redirect($response, $url, $status = 200)
+    {
+        return $this->withRedirect($response, $url, $status);
+    }
+
+    /**
+     * Output rendered template.
+     *
+     * @throws Exception
+     *
+     * @return mixed
+     */
+    public function router()
+    {
+        if (!$this->has(RouterInterface::class)) {
+            throw new Exception('Router interface not defined');
+        }
+
+        return $this->get(RouterInterface::class);
+    }
+
+    /**
+     * Response with redirect.
+     *
+     * @param $response \Psr\Http\Message\ResponseInterface
+     * @param $url
+     * @param null $status
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    protected function withRedirect($response, $url, $status = null)
+    {
+        $responseWithRedirect = $response->withHeader('Location', (string)$url);
+
+        if (is_null($status) && $response->getStatusCode() === 200) {
+            $status = 302;
+        }
+
+        if (!is_null($status)) {
+            return $responseWithRedirect->withStatus($status);
+        }
+
+        return $responseWithRedirect;
     }
 }

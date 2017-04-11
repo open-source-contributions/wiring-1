@@ -3,7 +3,7 @@
 namespace Wiring\Provider;
 
 use Wiring\Provider\Mailtrap\Message;
-use Wiring\Interfaces\ViewRendererInterface
+use Wiring\Interfaces\ViewRendererInterface;
 
 class Mailer
 {
