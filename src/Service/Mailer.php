@@ -1,13 +1,13 @@
 <?php
 
-namespace Wiring\Provider;
+namespace Wiring\Service;
 
-use Wiring\Provider\Mailtrap\Message;
+use Wiring\Service\Mailtrap\Message;
 use Wiring\Interfaces\ViewRendererInterface;
 
 class Mailer
 {
-    /** @var \PHPMailer */
+    /** @var mixed */
     protected $mailer;
 
     /** @var \Psr\Container\ContainerInterface $container */

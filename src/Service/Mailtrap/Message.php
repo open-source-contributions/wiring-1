@@ -1,10 +1,10 @@
 <?php
 
-namespace Wiring\Provider\Mailtrap;
+namespace Wiring\Service\Mailtrap;
 
 class Message
 {
-    /** @var \PHPMailer */
+    /** @var mixed */
     protected $mailer;
 
     /**
