@@ -9,12 +9,12 @@ use Wiring\Interfaces\MiddlewareInterface;
 class RouteMiddleware implements MiddlewareInterface
 {
     /**
-     * @var \League\Route\Dispatcher
+     * @var mixed
      */
     protected $route;
 
     /**
-     * @param \League\Route\RouteCollection $route
+     * @param mixed $route
      */
     public function __construct($route = null)
     {
@@ -37,7 +37,7 @@ class RouteMiddleware implements MiddlewareInterface
     }
 
     /**
-     * @return \League\Route\RouteCollection
+     * @return mixed
      */
     public function getRoute()
     {
@@ -45,7 +45,7 @@ class RouteMiddleware implements MiddlewareInterface
     }
 
     /**
-     * @param \League\Route\RouteCollection $route
+     * @param mixed $route
      */
     public function setRoute($route)
     {
