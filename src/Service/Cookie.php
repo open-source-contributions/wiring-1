@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace Wiring\Service;
 
 class Cookie
 {

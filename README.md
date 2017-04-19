@@ -5,9 +5,12 @@ An PHP Microframework with Interoperability (PSRs).
 ## Installation / Usage
 
 1. Download and install Composer by following the [official instructions](https://getcomposer.org/download/).
-2. Create a composer.json defining wiring dependencie.
-
-    ``` json
+2. Add wiring dependencie to composer.
+    ```bash
+    composer require aracaw/wiring
+    ```
+    or change your composer.json
+    ```json
     {
         "require": {
             "aracaw/wiring": "^1.0.0"
@@ -37,7 +40,7 @@ Use Wiring [Skeleton](https://github.com/aracaw/wiring-skeleton.git):
 3. Download Composer
 
     Run this in your terminal to get the latest Composer version:
-    
+
     ```bash
     curl -sS https://getcomposer.org/installer | php
     ```
