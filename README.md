@@ -68,6 +68,6 @@ Requirements
 
 PHP 7.0 or above.
 
-##Copyright and license
+## Copyright and license
 
 Code and documentation copyright (c) 2017, Code released under the BSD-3-Clause license.
